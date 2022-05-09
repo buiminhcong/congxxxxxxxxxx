@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import androidx.annotation.Nullable;
 
 import com.bmcong2k.luyentapsql2.Book1;
+import com.bmcong2k.luyentapsql2.Sort;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -118,44 +119,47 @@ public class SQliteHelper extends SQLiteOpenHelper {
         return db.delete("book1", whereClause, whereAgrg);
     }
 //   // Search name
-//    public List<Item> searchByTitle(String key) {
-//        List<Item> list = new ArrayList<>();
-//        //select * from items where title like %key%
-//        String whereClause = "title like ?";
-//        String[] whereAgrg = {"%" + key + "%"};
-//        SQLiteDatabase st = getReadableDatabase();
-//        Cursor rs = st.query("items", null,
-//                whereClause, whereAgrg, null, null, null);
+    public List<Book1> searchByTenSach(String key) {
+        List<Book1> list = new ArrayList<>();
+        //select * from items where title like %key%
+        String whereClause = "tenSach like ?";
+        String[] whereAgrg = {"%" + key + "%"};
+        SQLiteDatabase st = getReadableDatabase();
+        Cursor rs = st.query("book1", null,
+                whereClause, whereAgrg, null, null, null);
+
+        while (rs != null && rs.moveToNext()) {
+            int id = rs.getInt(0);
+            String tenSach = rs.getString(1);
+            String tacGia = rs.getString(2);
+            String tomTat = rs.getString(3);
+            String nxb = rs.getString(4);
+            int danhGia = rs.getInt(5);
+            list.add(new Book1(id, tenSach, tacGia, tomTat, nxb,danhGia));
+        }
+        return list;
+    }
 //
-//        while (rs != null && rs.moveToNext()) {
-//            int id = rs.getInt(0);
-//            String title = rs.getString(1);
-//            String category = rs.getString(2);
-//            String price = rs.getString(3);
-//            String date = rs.getString(4);
-//            list.add(new Item(id, title, category, price, date));
-//        }
-//        return list;
-//    }
-//
-//    public List<Book> searchBynhaXB(String nhaXB) {
-//        List<Book> list = new ArrayList<>();
-//        //SELECT * FROM Khachhang where Thanhpho = "Bắc Ninh" ORDER BY MaBuudien DESC
-//        SQLiteDatabase db = this.getReadableDatabase();
-//
-//        Cursor rs = db.rawQuery("SELECT * FROM book WHERE nhaXB = ? ORDER BY gia DESC",
-//                new String[]{nhaXB});
-//
-//        while (rs != null && rs.moveToNext()) {
-//            int id = rs.getInt(0);
-//            String ten = rs.getString(1);
-//            String nxb = rs.getString(2);
-//            String nhaXB1 = rs.getString(3);
-//            String gia = rs.getString(4);
-//            list.add(new Book(id, ten, nxb, nhaXB1, gia));
-//        }
-//        return list;
-//    }
+    public List<Book1> searchByTacGia(String tacGia) {
+        List<Book1> list = new ArrayList<>();
+        //SELECT * FROM Khachhang where Thanhpho = "Bắc Ninh" ORDER BY MaBuudien DESC
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor rs = db.rawQuery("SELECT * FROM book1 WHERE tacGia = ? ORDER BY danhGia DESC",
+                new String[]{tacGia});
+
+        while (rs != null && rs.moveToNext()) {
+            int id = rs.getInt(0);
+            String tenSach = rs.getString(1);
+            String tg = rs.getString(2);
+            String tomTat = rs.getString(3);
+            String nxb = rs.getString(4);
+            int danhGia = rs.getInt(5);
+            list.add(new Book1(id, tenSach, tg, tomTat, nxb,danhGia));
+        }
+        return list;
+
+    }
 ////      // serch from to
 //    public List<Book> searchByPriceFromTo(String from, String to) {
 //        List<Book> list = new ArrayList<>();
@@ -176,4 +180,26 @@ public class SQliteHelper extends SQLiteOpenHelper {
 //        }
 //        return list;
 //    }
+
+    public List<Sort> sortByTheLoai() {
+        List<Sort> list = new ArrayList<>();
+        //SELECT * FROM Khachhang where Thanhpho = "Bắc Ninh" ORDER BY MaBuudien DESC
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor rs = db.rawQuery("SELECT count(nxb) AS dem, tenSach, nxb\n" +
+                        "FROM book1\n" +
+                        "GROUP BY nxb\n" +
+                        "ORDER BY count(nxb) DESC;",
+                new String[]{});
+
+        while (rs != null && rs.moveToNext()) {
+            int dem = rs.getInt(0);
+            String tenSach = rs.getString(1);
+            String nxb = rs.getString(2);
+            Sort s = new Sort(dem, tenSach, nxb);
+            list.add(s);
+        }
+        return list;
+    }
+
 }

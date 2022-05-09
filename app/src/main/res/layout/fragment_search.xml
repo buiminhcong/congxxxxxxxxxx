@@ -13,18 +13,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
-    <EditText
-        android:id="@+id/eFrom"
-        android:textSize="18sp"
-        android:hint="Choose day from"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-    <EditText
-        android:id="@+id/eTo"
-        android:textSize="18sp"
-        android:hint="Choose day to"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
 
     <LinearLayout
         android:orientation="horizontal"
@@ -32,7 +20,7 @@
         android:layout_height="wrap_content">
 
         <Spinner
-            android:id="@+id/spCategory"
+            android:id="@+id/spTacGia"
             android:layout_weight="1"
             android:gravity="center"
             android:layout_width="wrap_content"

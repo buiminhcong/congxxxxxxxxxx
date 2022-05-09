@@ -61,6 +61,7 @@ public class UpdateDeleteActivity extends AppCompatActivity implements View.OnCl
             }
         }
         spTacGia.setSelection(g);
+        rtbar.setRating((float) book.getDanhGia());
 
     }
 
