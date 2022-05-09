@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">LuyenTapSql2</string>
+    <string-array name="tacgia">
+        <item>Thầy Quế</item>
+        <item>Cô Vân Anh</item>
+        <item>Thầy Sơn</item>
+        <item>Thầy Công</item>
+    </string-array>
+    <string-array name="nxb">
+        <item>Khoa Học và XH</item>
+        <item>Giáo dục</item>
+        <item>Kỹ Thuật</item>
+    </string-array>
+</resources>
